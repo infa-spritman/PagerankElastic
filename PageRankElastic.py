@@ -7,7 +7,7 @@ from math import log
 
 # Code for Inlinks File
 
-f = open('wt2g_inlinks.txt', 'r')
+f = open('linkgraph_WithoutQuery.txt', 'r')
 l = f.readlines()
 
 # print l.__len__()
@@ -52,28 +52,25 @@ def isConverged(count):
     else:
         return False
 
-
+lnumb  = 1
 # Intialising M dictionary with given file
 for line in l:
-    line = line.split()
-    M[line[0]] = Set(line[1:])
-    P.add(line[0])
-    L[line[0]] = 0.0
+    try:
+        lineSP = line.split()
+        lnumb +=1
+        if len(lineSP) > 0:
+            M[lineSP[0]] = Set(lineSP[1:])
+            # M[line[0]] = line[1:]
+            P.update(lineSP)
+    except Exception, e:
+        print e,lnumb
 
 # print M.__len__()
 # print P.__len__()
 # print L.__len__()
 
-
-# Updating L with outlinks count
-for inlinks in M.values():
-    for link in inlinks:
-        L[link] += 1.0
-
-# Updating S with sink nodes; i.e L[link] = 0
-for link, outlink_count in L.items():
-    if outlink_count == 0.0:
-        S.add(link)
+#print M['http://suzy123.com']
+#Intialising all P with outlinks count
 
 # total number of Pages
 N = float(len(P))
@@ -83,6 +80,19 @@ d = 0.85
 
 for p in P:
     PR[p] = 1.0 / N  # initial value
+    L[p] = 0.0
+
+# Updating L with outlinks count
+for inlinks in M.values():
+    for link in inlinks:
+        L[link] += 1.0
+
+
+# Updating S with sink nodes; i.e L[link] = 0
+for link, outlink_count in L.items():
+    if outlink_count == 0.0:
+        S.add(link)
+
 
 count = 0
 
@@ -96,8 +106,9 @@ while not(isConverged(count)):
     for p in P:
         newPR[p] = (1.0 - d) / N
         newPR[p] += (d * sinkPR) / N
-        for q in M[p]:
-            newPR[p] += (d * PR[q]) / L[q]
+        if p in M:
+            for q in M[p]:
+                newPR[p] += (d * PR[q]) / L[q]
 
     for p in P:
         PR[p] = newPR[p]
@@ -114,7 +125,7 @@ i = 1
 #     print str(i) + ". " + link + str(" : ") + str(score)
 #     i += 1
 
-for j in range(1000):
+for j in range(500):
     print sortedPR[j]
 
 f.close()
