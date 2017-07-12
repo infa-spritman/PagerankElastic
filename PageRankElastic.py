@@ -7,7 +7,7 @@ from math import log
 
 # Code for Inlinks File
 
-f = open('linkgraph_WithoutQuery.txt', 'r')
+f = open('Inlinkgraph_deli.txt', 'r')
 l = f.readlines()
 
 # print l.__len__()
@@ -56,7 +56,7 @@ lnumb  = 1
 # Intialising M dictionary with given file
 for line in l:
     try:
-        lineSP = line.split()
+        lineSP = line.split('<:>')
         lnumb +=1
         if len(lineSP) > 0:
             M[lineSP[0]] = Set(lineSP[1:])
