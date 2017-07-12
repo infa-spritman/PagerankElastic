@@ -21,12 +21,12 @@ l = f.readlines()
 # S is the set of sink nodes, i.e., pages that have no out links
 # perplexity is the list of all perplexity values used to calculate convergence
 
-M = {}
-L = {}
+M = {} #705841
+L = {} #709363
 PR = {}
 newPR = {}
-P = Set()
-S = Set()
+P = Set() #709363
+S = Set() #605574
 perplexityList  =[]
 
 # Function Def

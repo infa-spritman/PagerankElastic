@@ -7,7 +7,7 @@ from math import log
 
 # Code for Inlinks File
 
-f = open('wt2g_inlinks.txt', 'r')
+f = open('out-linkgraph.txt', 'r')
 l = f.readlines()
 
 # print l.__len__()
@@ -52,12 +52,14 @@ def isConverged(count):
     else:
         return False
 
-
+lnumb = 1
 # Intialising M dictionary with given file
 for line in l:
+    print lnumb
     line = line.split()
     M[line[0]] = Set(line[1:])
     P.add(line[0])
+    lnumb += 1
     L[line[0]] = 0.0
 
 # print M.__len__()
