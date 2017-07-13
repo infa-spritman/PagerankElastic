@@ -23,11 +23,43 @@ OutlinkGraph = {}
 A = {}
 H = {}
 
-
+perplexityA = []
+perplexityH = []
 ####################################################################
 
+def getAValue():
+    entropy =0.0
+    for pg in A.values():
+        if pg!=0.0:
+            entropy += pg*log(pg,2)
+
+    return 2**(-1.0*entropy)
+
+def getHValue():
+    entropy =0.0
+    for pg in H.values():
+        if pg != 0.0:
+            entropy += pg*log(pg,2)
+
+    return 2**(-1.0*entropy)
+
 def isConverged(count):
-    return False
+    aValue  = getAValue()
+    hValue = getHValue()
+    #print str(count+1) + " " + str(pValue)
+    perplexityA.append(aValue)
+    perplexityH.append(hValue)
+    if len(perplexityA)>4 and len(perplexityH)>4:
+        if(((int(perplexityA[count]))==(int(perplexityA[count-1]))==(int(perplexityA[count-2]))==(int(perplexityA[count-3]))) and
+               ((int(perplexityH[count])) == (int(perplexityH[count - 1])) == (int(perplexityH[count - 2])) == (
+               int(perplexityH[count - 3])))):
+            print str(count+1) + " " + str(aValue) + " " + str(hValue)
+            return True
+        else:
+            return False
+
+    else:
+        return False
 
 
 #####################################################################
@@ -137,9 +169,8 @@ for p in S:
 count = 0
 
 while not (isConverged(count)):
-    if count > 100:
+    if count>100:
         break
-
     norm = 0.0
     for p in S:
         A[p] = 0.0

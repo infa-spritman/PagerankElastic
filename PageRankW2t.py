@@ -7,7 +7,7 @@ from math import log
 
 # Code for Inlinks File
 
-f = open('out-linkgraph.txt', 'r')
+f = open('wt2g_inlinks.txt', 'r')
 l = f.readlines()
 
 # print l.__len__()
@@ -116,7 +116,7 @@ i = 1
 #     print str(i) + ". " + link + str(" : ") + str(score)
 #     i += 1
 
-for j in range(1000):
+for j in range(500):
     print sortedPR[j]
 
 f.close()
